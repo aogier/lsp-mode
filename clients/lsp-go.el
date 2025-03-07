@@ -458,7 +458,7 @@ Will update if UPDATE? is t"
                                         (lsp:set-server-capabilities-completion-provider? caps t)))
                                     (with-lsp-workspace workspace
                                       (lsp--set-configuration
-                                       (lsp-configuration-section "go"))))
+                                       (lsp-configuration-section "gopls"))))
                   :after-open-fn (lambda ()
                                    ;; https://github.com/golang/tools/commit/b2d8b0336
                                    (setq-local lsp-completion-filter-on-incomplete nil))

@@ -446,7 +446,7 @@ Will update if UPDATE? is t"
                   :server-id 'gopls
                   :completion-in-comments? t
                   :library-folders-fn #'lsp-go--library-default-directories
-                                    :initialized-fn (lambda (workspace)
+                  :initialized-fn (lambda (workspace)
                                     ;; OpenSCAD-LSP returns an empty list of
                                     ;; completion options at initialization
                                     ;; so completionProvider capability is {}
@@ -455,7 +455,7 @@ Will update if UPDATE? is t"
                                     ;; to enable completion
                                     (let ((caps (lsp--workspace-server-capabilities workspace)))
                                       (unless (lsp-get caps :inlayHintProvider)
-                                        (lsp:set-server-capabilities-completion-provider? caps t)))
+                                        (lsp:set-server-capabilities-color-provider? caps t)))
                                     (with-lsp-workspace workspace
                                       (lsp--set-configuration
                                        (lsp-configuration-section "gopls"))))

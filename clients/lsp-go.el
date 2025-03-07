@@ -446,6 +446,19 @@ Will update if UPDATE? is t"
                   :server-id 'gopls
                   :completion-in-comments? t
                   :library-folders-fn #'lsp-go--library-default-directories
+                                    :initialized-fn (lambda (workspace)
+                                    ;; OpenSCAD-LSP returns an empty list of
+                                    ;; completion options at initialization
+                                    ;; so completionProvider capability is {}
+                                    ;; When using plists, this value is parsed as
+                                    ;; null/nil so we need to force it to "t"
+                                    ;; to enable completion
+                                    (let ((caps (lsp--workspace-server-capabilities workspace)))
+                                      (unless (lsp-get caps :inlayHintProvider)
+                                        (lsp:set-server-capabilities-completion-provider? caps t)))
+                                    (with-lsp-workspace workspace
+                                      (lsp--set-configuration
+                                       (lsp-configuration-section "go"))))
                   :after-open-fn (lambda ()
                                    ;; https://github.com/golang/tools/commit/b2d8b0336
                                    (setq-local lsp-completion-filter-on-incomplete nil))
